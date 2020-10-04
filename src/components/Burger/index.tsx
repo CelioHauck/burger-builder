@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { IngredientModel } from "../../types/ingredient.model";
+import { IngredientModel } from "../../types/models/ingredient.model";
 import { IngredientType } from "../../utils/Enum/ingredient-type.enum";
 import Ingredient from "./ingredient";
 import classes from './style.module.css';
@@ -12,18 +12,24 @@ type Ingredients = {
 
 const burger: FunctionComponent<Ingredients> = (props) => {
 
-    const tranformedIngredients = Object.keys(props.ingredients)
+    let tranformedIngredients = Object.keys(props.ingredients)
         .map((igKey) => {
             const ig = igKey as keyof IngredientModel;
             return [...Array(props.ingredients[ig])].map((_, i) => {
                 return <Ingredient key={ig + i} type={ig} />
             })
-        });
-    debugger;
+        })
+        .reduce((arr, el) => {
+            return arr.concat(el);
+        }, []);
+
+    if (tranformedIngredients.length > 0) {
+        tranformedIngredients = [<p>Please start adding ingredients</p>]
+    }
     return (
         <div className={classes.Burger}>
             <Ingredient type={IngredientType.breadTop} />
-                {tranformedIngredients}
+            {tranformedIngredients}
             <Ingredient type={IngredientType.breadBottom} />
         </div>
     );

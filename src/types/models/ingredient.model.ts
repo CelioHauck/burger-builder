@@ -1,4 +1,4 @@
-import { IngredientType } from "../utils/Enum/ingredient-type.enum";
+import { IngredientType } from "../../utils/Enum/ingredient-type.enum";
 
 export interface IngredientModel {
     [IngredientType.salad]: number,
