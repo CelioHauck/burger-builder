@@ -23,8 +23,8 @@ const burger: FunctionComponent<Ingredients> = (props) => {
             return arr.concat(el);
         }, []);
 
-    if (tranformedIngredients.length > 0) {
-        tranformedIngredients = [<p>Please start adding ingredients</p>]
+    if (tranformedIngredients.length == 0) {
+        tranformedIngredients = [<p key='PleaseStart'>Please start adding ingredients</p>]
     }
     return (
         <div className={classes.Burger}>

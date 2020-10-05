@@ -34,7 +34,7 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
     addIngredientHandler = (type: IngredientType) => {
         const key = type as keyof IngredientModel
         const updateIngredients = { ...this.state };
-        updateIngredients.ingredients[key] += updateIngredients.ingredients[key];
+        updateIngredients.ingredients[key] += 1;
         const newPrice = updateIngredients.totalPrice + PRICES[key];
         this.setState({ ingredients: updateIngredients.ingredients, totalPrice: newPrice });
     }
@@ -43,7 +43,7 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
         return (
             <React.Fragment>
                 <Burger ingredients={this.state.ingredients} />
-                <BuildControls />
+                <BuildControls add={this.addIngredientHandler} />
             </React.Fragment>
         );
     }
