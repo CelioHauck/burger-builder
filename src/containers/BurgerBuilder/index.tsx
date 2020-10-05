@@ -7,6 +7,7 @@ import { IngredientType } from "../../utils/Enum/ingredient-type.enum";
 type IngredientsState = {
     ingredients: IngredientModel
     totalPrice: number;
+    purchasable: boolean
 }
 
 //Ver isso em typescript
@@ -28,8 +29,21 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
                 [IngredientType.cheese]: 2,
                 [IngredientType.meat]: 2,
             },
-            totalPrice: 4
+            totalPrice: 4,
+            purchasable: false
         }
+
+    updatePurchaseState = (ingredientsModel:IngredientModel) => {
+        const sum = Object.keys(ingredientsModel)
+            .map(igKey => {
+                const key = igKey as keyof IngredientModel
+                return ingredientsModel[key];
+            }).reduce((sum, el) => {
+                return sum + el;
+            }, 0);
+
+        this.setState({ purchasable: sum > 0 });
+    }
 
     addIngredientHandler = (type: IngredientType) => {
         const key = type as keyof IngredientModel
@@ -37,13 +51,30 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
         updateIngredients.ingredients[key] += 1;
         const newPrice = updateIngredients.totalPrice + PRICES[key];
         this.setState({ ingredients: updateIngredients.ingredients, totalPrice: newPrice });
+        this.updatePurchaseState(updateIngredients.ingredients);
+    }
+
+    removeIngredientHandler = (type: IngredientType) => {
+        const key = type as keyof IngredientModel
+        if (this.state.ingredients[key] <= 0)
+            return;
+        const updateIngredients = { ...this.state };
+        updateIngredients.ingredients[key] -= 1;
+        const newPrice = updateIngredients.totalPrice - PRICES[key];
+        this.setState({ ingredients: updateIngredients.ingredients, totalPrice: newPrice });
+        this.updatePurchaseState(updateIngredients.ingredients);
     }
 
     render() {
+        const disabledInfo: any = { ...this.state.ingredients };
+        for (let key in disabledInfo) {
+            disabledInfo[key] = disabledInfo[key] <= 0;
+        }
+
         return (
             <React.Fragment>
                 <Burger ingredients={this.state.ingredients} />
-                <BuildControls add={this.addIngredientHandler} />
+                <BuildControls price={this.state.totalPrice} purchaseble={this.state.purchasable} add={this.addIngredientHandler} remove={this.removeIngredientHandler} disabled={disabledInfo} />
             </React.Fragment>
         );
     }

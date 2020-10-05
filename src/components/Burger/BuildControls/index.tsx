@@ -12,14 +12,25 @@ const controls = [
 
 type BuildControlsProps = {
     add: (type: IngredientType) => void;
+    remove: (type: IngredientType) => void;
+    disabled: { [k: string]: boolean };
+    purchaseble: boolean,
+    price: number;
 }
 
 const BuildControls: FunctionComponent<BuildControlsProps> = (props) => {
     return (
         <div className={classes.BuildControls}>
+            <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p>
             {controls.map(ctrl => (
-                <BuildControl key={ctrl.label} label={ctrl.label} added={() => { props.add(ctrl.type) }} />
+                <BuildControl
+                    key={ctrl.label}
+                    label={ctrl.label}
+                    added={() => { props.add(ctrl.type) }}
+                    remove={() => { props.remove(ctrl.type) }}
+                    disabled={props.disabled[ctrl.type]} />
             ))}
+            <button disabled={!props.purchaseble} className={classes.OrderButton}>ORDER NOW</button>
         </div>
     )
 }
