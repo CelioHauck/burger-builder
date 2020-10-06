@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/Burger/BuildControls";
+import OrderSummary from "../../components/Burger/OrderSummary";
 import { IngredientModel } from "../../types/models/ingredient.model";
+import Modal from "../../UI/Modal";
 import { IngredientType } from "../../utils/Enum/ingredient-type.enum";
 
 type IngredientsState = {
@@ -67,12 +69,16 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
 
     render() {
         const disabledInfo: any = { ...this.state.ingredients };
+
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
         return (
             <React.Fragment>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}></OrderSummary>
+                </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls price={this.state.totalPrice} purchaseble={this.state.purchasable} add={this.addIngredientHandler} remove={this.removeIngredientHandler} disabled={disabledInfo} />
             </React.Fragment>
