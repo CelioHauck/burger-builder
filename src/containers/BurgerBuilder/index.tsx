@@ -18,7 +18,7 @@ const PRICES = {
   [IngredientType.salad]: 0.5,
   [IngredientType.cheese]: 0.4,
   [IngredientType.meat]: 1.3,
-  [IngredientType.bacon]: 0.7
+  [IngredientType.bacon]: 0.7,
 };
 
 class BurgerBuilder extends Component<{}, IngredientsState> {
@@ -27,16 +27,16 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
       [IngredientType.salad]: 0,
       [IngredientType.bacon]: 0,
       [IngredientType.cheese]: 0,
-      [IngredientType.meat]: 0
+      [IngredientType.meat]: 0,
     },
     totalPrice: 0,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
   };
 
   updatePurchaseState = (ingredientsModel: IngredientModel) => {
     const sum = Object.keys(ingredientsModel)
-      .map(igKey => {
+      .map((igKey) => {
         const key = igKey as keyof IngredientModel;
         return ingredientsModel[key];
       })
@@ -54,7 +54,7 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
     const newPrice = updateIngredients.totalPrice + PRICES[key];
     this.setState({
       ingredients: updateIngredients.ingredients,
-      totalPrice: newPrice
+      totalPrice: newPrice,
     });
     this.updatePurchaseState(updateIngredients.ingredients);
   };
@@ -67,7 +67,7 @@ class BurgerBuilder extends Component<{}, IngredientsState> {
     const newPrice = updateIngredients.totalPrice - PRICES[key];
     this.setState({
       ingredients: updateIngredients.ingredients,
-      totalPrice: newPrice
+      totalPrice: newPrice,
     });
     this.updatePurchaseState(updateIngredients.ingredients);
   };
