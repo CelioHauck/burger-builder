@@ -7,7 +7,7 @@ const controls = [
   { label: "Salad", type: IngredientType.salad },
   { label: "Bacon", type: IngredientType.bacon },
   { label: "Cheese", type: IngredientType.cheese },
-  { label: "Meat", type: IngredientType.meat }
+  { label: "Meat", type: IngredientType.meat },
 ];
 
 type BuildControlsProps = {
@@ -19,13 +19,13 @@ type BuildControlsProps = {
   price: number;
 };
 
-const BuildControls: FunctionComponent<BuildControlsProps> = props => {
+const BuildControls: FunctionComponent<BuildControlsProps> = (props) => {
   return (
     <div className={classes.BuildControls}>
       <p>
         Current Price: <strong>{props.price.toFixed(2)}</strong>
       </p>
-      {controls.map(ctrl => (
+      {controls.map((ctrl) => (
         <BuildControl
           key={ctrl.label}
           label={ctrl.label}
