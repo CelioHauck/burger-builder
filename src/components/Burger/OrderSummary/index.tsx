@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { IngredientModel } from "../../../types/models/ingredient.model";
 import { IngredientType } from "../../../utils/Enum/ingredient-type.enum";
 import Button from "../../../UI/Button";
@@ -11,8 +11,12 @@ type OrderSummaryProps = {
   continue: () => void;
 };
 
-const OrderSummary: FunctionComponent<OrderSummaryProps> = props => {
-  const ingredientSummary = Object.keys(props.ingredients).map(ig => {
+const OrderSummary: FunctionComponent<OrderSummaryProps> = (props) => {
+  useEffect(() => {
+    console.log("[Order Summary] Will Update");
+  });
+
+  const ingredientSummary = Object.keys(props.ingredients).map((ig) => {
     const key = ig as keyof IngredientModel;
     return (
       <li key={IngredientType[key] + props.ingredients[key]}>

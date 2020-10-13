@@ -6,9 +6,11 @@ import Backdrop from "../Backdrop";
 type ModalProps = {
   show: boolean;
   close: () => void;
+  children: React.ReactNode;
 };
 
-const Modal: FunctionComponent<ModalProps> = props => {
+//TODO: Estudar como que funciona react.memo quando temos um children no component
+const Modal: FunctionComponent<ModalProps> = (props) => {
   return (
     <React.Fragment>
       <Backdrop show={props.show} close={props.close} />
@@ -16,7 +18,7 @@ const Modal: FunctionComponent<ModalProps> = props => {
         className={classes.Modal}
         style={{
           transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-          opacity: props.show ? "1" : "0"
+          opacity: props.show ? "1" : "0",
         }}
       >
         {props.children}
@@ -25,4 +27,4 @@ const Modal: FunctionComponent<ModalProps> = props => {
   );
 };
 
-export default Modal;
+export default React.memo(Modal);
